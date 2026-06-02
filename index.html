@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Монтаж систем вентиляции — ГК «Миторра»</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --dark: #1a1a1a;
+    --gray: #6b7280;
+    --light: #f5f5f5;
+    --border: #e5e5e5;
+    --shadow: 0 4px 20px rgba(0,0,0,0.06);
+    --shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fff;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* === HEADER === */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--dark);
+    letter-spacing: -0.5px;
+  }
+  .desktop-nav { display: flex; gap: 32px; align-items: center; }
+  .desktop-nav a, .nav-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray);
+    transition: color 0.2s;
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+  }
+  .desktop-nav a:hover, .nav-link:hover { color: var(--dark); }
+  .nav-item.dropdown { position: relative; }
+  .nav-link .arrow {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 0.65rem;
+    transition: transform 0.25s ease;
+  }
+  .nav-item.dropdown.open .arrow,
+  .nav-item.dropdown:hover .arrow { transform: rotate(180deg); }
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 0;
+    min-width: 260px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    z-index: 9999;
+  }
+  .dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+  }
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    color: var(--gray);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .dropdown-menu a:hover { color: var(--dark); background: var(--light); }
+  .nav-item.dropdown.open .dropdown-menu,
+  .nav-item.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .header-btn {
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .header-btn:hover { opacity: 0.85; }
+  .burger {
+    display: none;
+    width: 28px;
+    height: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .burger span {
+    display: block;
+    height: 2px;
+    background: var(--dark);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .burger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 9998;
+    flex-direction: column;
+    padding: 100px 32px 40px;
+    gap: 8px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a, .mobile-dropdown > button {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark);
+    padding: 12px 0;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mobile-dropdown > button span { font-size: 0.9rem; transition: transform 0.25s; }
+  .mobile-dropdown.open > button span { transform: rotate(180deg); }
+  .mobile-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    padding-left: 16px;
+    gap: 4px;
+  }
+  .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
+  .mobile-dropdown-menu a {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--gray);
+    padding: 8px 0;
+  }
+  .fab-phone {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: var(--dark);
+    color: #fff;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    z-index: 9997;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    animation: fabPulse 2s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+  .fab-phone:hover { transform: scale(1.1); }
+  @keyframes fabPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 0 rgba(26,26,26,0.4); }
+    50% { box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 12px rgba(26,26,26,0); }
+  }
+
+  /* === HERO SERVICE === */
+  .hero-service {
+    position: relative;
+    height: 70vh;
+    min-height: 420px;
+    background: #777;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .hero-service-bg {
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23777" width="1200" height="600"/><text x="50%25" y="50%25" fill="%23999" font-size="20" font-family="Inter" text-anchor="middle">Фото: воздуховоды / вентустановка</text></svg>');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-service-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+  }
+  .hero-service-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 32px;
+    width: 100%;
+  }
+  .hero-service-inner h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    max-width: 700px;
+  }
+  .hero-service-inner p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+  .hero-service-meta {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-service-meta span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-service-meta span strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* === SECTIONS BASE === */
+  section { padding: 80px 32px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+  }
+  .section-title h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+  .section-title p {
+    color: var(--gray);
+    font-size: 0.95rem;
+  }
+  .section-link {
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+    white-space: nowrap;
+  }
+  .section-link:hover { gap: 10px; }
+
+  /* === ЗНАЧЕНИЕ ДЛЯ ПОТРЕБИТЕЛЯ === */
+  .value-section { background: #fff; }
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .value-card {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+  }
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+  }
+  .value-card .icon {
+    width: 44px;
+    height: 44px;
+    background: var(--dark);
+    color: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .value-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .value-card p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.55;
+  }
+
+  /* === ВИДЫ РАБОТ === */
+  .works-section { background: var(--light); }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .work-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transition: all 0.3s ease;
+  }
+  .work-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    border-color: transparent;
+  }
+  .work-card .work-img {
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.8rem;
+    min-height: 220px;
+  }
+  .work-card .work-info {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .work-card .work-info h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .work-card .work-info p {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .work-card .work-info ul {
+    list-style: none;
+    font-size: 0.82rem;
+    color: var(--dark);
+  }
+  .work-card .work-info ul li {
+    padding: 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .work-card .work-info ul li::before {
+    content: "—";
+    color: var(--gray);
+  }
+
+  /* === ОБЪЕКТЫ — карусель (как на главной) === */
+  .objects-section { background: #fff; }
+  .objects-carousel-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+  .objects-carousel {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.6s ease;
+  }
+  .object-slide {
+    min-width: calc(33.333% - 14px);
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .object-slide:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+  }
+  .object-slide .obj-img {
+    height: 200px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .object-slide .obj-info { padding: 20px; }
+  .object-slide .obj-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .object-slide .obj-meta {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+  .object-slide .obj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .obj-tag {
+    background: var(--light);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--gray);
+  }
+  .carousel-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .carousel-dot.active { background: var(--dark); }
+  .carousel-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+    pointer-events: none;
+  }
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: all;
+    font-size: 1rem;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+  }
+  .carousel-arrow:hover {
+    background: var(--dark);
+    color: #fff;
+    border-color: var(--dark);
+  }
+
+  /* === СТАТЬИ === */
+  .articles-section { background: var(--light); }
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .article-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .article-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    border-color: transparent;
+  }
+  .article-card .art-img {
+    height: 160px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.75rem;
+  }
+  .article-card .art-info { padding: 20px; }
+  .article-card .art-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--dark);
+    background: var(--light);
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .article-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .article-card p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .article-card .art-date {
+    font-size: 0.75rem;
+    color: #aaa;
+  }
+
+  /* === CTA + КОНТАКТЫ === */
+  .cta-section {
+    background: var(--dark);
+    color: #fff;
+    padding: 80px 32px;
+  }
+  .cta-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .cta-content h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .cta-content p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    max-width: 440px;
+  }
+  .cta-btn {
+    background: #fff;
+    color: var(--dark);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .cta-btn:hover {
+    background: var(--light);
+    transform: translateY(-2px);
+  }
+  .cta-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .cta-contact-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+  }
+  .cta-contact-line .icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .cta-contact-line strong {
+    display: block;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.5);
+    padding: 40px 32px;
+    font-size: 0.8rem;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 32px;
+  }
+  .footer-col h4 {
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .footer-col a, .footer-col p {
+    display: block;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: #fff; }
+  .footer-desc {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1024px) {
+    .desktop-nav, .header-btn { display: none; }
+    .burger { display: flex; }
+    .fab-phone { display: flex; }
+    .value-grid { grid-template-columns: repeat(2, 1fr); }
+    .works-grid { grid-template-columns: 1fr; }
+    .work-card { grid-template-columns: 1fr; }
+    .work-card .work-img { min-height: 180px; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .cta-inner { grid-template-columns: 1fr; gap: 32px; }
+    .object-slide { min-width: calc(50% - 10px); }
+    .hero-service-inner h1 { font-size: 1.9rem; }
+  }
+  @media (max-width: 640px) {
+    .value-grid { grid-template-columns: 1fr; }
+    .object-slide { min-width: 100%; }
+    .hero-service { height: auto; min-height: 380px; }
+    .hero-service-inner h1 { font-size: 1.6rem; }
+    .hero-service-meta { gap: 12px; }
+    section { padding: 50px 20px; }
+    .header-inner { padding: 14px 20px; }
+    .mobile-menu { padding: 80px 20px 40px; }
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+  .clickable { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="logo">Логотип</div>
+    <nav class="desktop-nav">
+      <a href="index.html">Главная</a>
+      <div class="nav-item dropdown" id="servicesDropdown">
+        <button class="nav-link" onclick="toggleDropdown(event)">
+          Услуги <span class="arrow">▼</span>
+        </button>
+        <div class="dropdown-menu">
+          <a href="#">Электроснабжение</a>
+          <a href="#">Водоснабжение и канализация</a>
+          <a href="#">Отопление</a>
+          <a href="ventilyaciya.html" style="color:var(--dark); font-weight:600;">Вентиляция</a>
+          <a href="#">Кондиционирование</a>
+          <a href="#">Слаботочные системы</a>
+        </div>
+      </div>
+      <a href="#objects">Объекты</a>
+      <a href="#about">О компании</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <button class="header-btn">Заказать звонок</button>
+    <button class="burger" id="burger" onclick="toggleMobileMenu()" aria-label="Меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Главная</a>
+  <div class="mobile-dropdown" id="mobileDropdown">
+    <button onclick="toggleMobileDropdown(this)">
+      Услуги <span>▼</span>
+    </button>
+    <div class="mobile-dropdown-menu">
+      <a href="#">Электроснабжение</a>
+      <a href="#">Водоснабжение и канализация</a>
+      <a href="#">Отопление</a>
+      <a href="ventilyaciya.html">Вентиляция</a>
+      <a href="#">Кондиционирование</a>
+      <a href="#">Слаботочные системы</a>
+    </div>
+  </div>
+  <a href="#objects">Объекты</a>
+  <a href="#about">О компании</a>
+  <a href="#contacts">Контакты</a>
+</div>
+
+<!-- FAB -->
+<a href="tel:+79990000000" class="fab-phone" aria-label="Позвонить">📞</a>
+
+<!-- Hero Service -->
+<section class="hero-service" style="padding:0;">
+  <div class="hero-service-bg"></div>
+  <div class="hero-service-overlay"></div>
+  <div class="hero-service-inner">
+    <h1>Монтаж систем вентиляции и кондиционирования</h1>
+    <p>Приточно-вытяжные установки, дымоудаление, климат-контроль. Проектирование, монтаж, автоматика и пусконаладка — под ключ. Работаем с объектами от 500 м².</p>
+    <div class="hero-service-meta">
+      <span><strong>120+</strong> систем вентиляции смонтировано</span>
+      <span><strong>СНиП 41-01-2003</strong> и СП 60.13330</span>
+      <span><strong>От 14 дней</strong> на типовой объект</span>
+    </div>
+  </div>
+</section>
+
+<!-- ЗНАЧЕНИЕ ДЛЯ ПОТРЕБИТЕЛЯ -->
+<section class="value-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Почему это важно для вашего объекта</h2>
+        <p>Неправильная вентиляция = конденсат, плесень, простои, штрафы от Роспотребнадзора</p>
+      </div>
+    </div>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="icon">🏛️</div>
+        <h3>Соответствие нормам</h3>
+        <p>Проектирование и монтаж по СНиП 41-01-2003, СП 60.13330. Проходим экспертизу с первого раза.</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">⚡</div>
+        <h3>Энергоэффективность</h3>
+        <p>Подбор оборудования с рекуперацией тепла. Снижение затрат на отопление до 30% в зимний период.</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">🔇</div>
+        <h3>Бесшумность</h3>
+        <p>Шумоизоляция воздуховодов, гибкие вставки, виброопоры. Уровень шума не выше нормы СНиП.</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">📊</div>
+        <h3>Контроль качества воздуха</h3>
+        <p>Автоматика с датчиками CO₂, влажности, температуры. Удалённый мониторинг через BMS.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВИДЫ РАБОТ -->
+<section class="works-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Виды работ</h2>
+        <p>Полный цикл от проектирования до сдачи в эксплуатацию</p>
+      </div>
+    </div>
+    <div class="works-grid">
+
+      <div class="work-card clickable">
+        <div class="work-img">[Фото: вентустановка / монтаж]</div>
+        <div class="work-info">
+          <h3>Установка оборудования</h3>
+          <p>Монтаж приточно-вытяжных установок, калориферов, охладителей, фильтров. Работаем с Systemair, Wolf, Lessar, Daikin.</p>
+          <ul>
+            <li>Установка на готовые основания или изготовление рам</li>
+            <li>Подключение к электроснабжению и автоматике</li>
+            <li>Балансировка вентиляторов</li>
+            <li>Шумо- и теплоизоляция корпуса</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="work-card clickable">
+        <div class="work-info">
+          <h3>Протяжка воздуховодов</h3>
+          <p>Монтаж прямоугольных и круглых воздуховодов из оцинкованной стали и нержавейки. Гибкие вставки, шумоглушители, огнезадерживающие клапаны.</p>
+          <ul>
+            <li>Изготовление воздуховодов на собственном станке</li>
+            <li>Герметизация фланцевых соединений</li>
+            <li>Установка диффузоров и решёток</li>
+            <li>Испытание на плотность (дым)</li>
+          </ul>
+        </div>
+        <div class="work-img">[Фото: воздуховоды / шахта]</div>
+      </div>
+
+      <div class="work-card clickable">
+        <div class="work-img">[Фото: щит автоматики]</div>
+        <div class="work-info">
+          <h3>Автоматика и диспетчеризация</h3>
+          <p>Шкафы управления, датчики, частотные преобразователи. Интеграция в общую систему BMS здания.</p>
+          <ul>
+            <li>Программирование контроллеров Siemens, Schneider</li>
+            <li>Датчики температуры, влажности, CO₂, давления</li>
+            <li>Удалённый доступ через web-интерфейс</li>
+            <li>Сценарии работы: день/ночь, лето/зима</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="work-card clickable">
+        <div class="work-info">
+          <h3>Пусконаладочные работы (ПНР)</h3>
+          <p>Проверка работы всей системы в штатном и аварийном режимах. Настройка расходов воздуха по проекту.</p>
+          <ul>
+            <li>Измерение скорости воздуха анемометром</li>
+            <li>Балансировка системы по расходам</li>
+            <li>Тепловизионный контроль узлов</li>
+            <li>Сдача исполнительной документации</li>
+          </ul>
+        </div>
+        <div class="work-img">[Фото: ПНР / приборы]</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- РЕАЛИЗОВАННЫЕ ОБЪЕКТЫ — карусель -->
+<section id="objects" class="objects-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Объекты с вентиляцией</h2>
+        <p>Реализованные проекты — от жилых комплексов до торговых центров</p>
+      </div>
+      <a href="#" class="section-link clickable">Все объекты →</a>
+    </div>
+    <div class="objects-carousel-wrap">
+      <div class="objects-carousel" id="objectsCarousel">
+        <div class="object-slide clickable">
+          <div class="obj-img">[Фото БЦ]</div>
+          <div class="obj-info">
+            <h4>БЦ «Технопарк»</h4>
+            <div class="obj-meta">Санкт-Петербург, 2022 · 18 000 м²</div>
+            <div class="obj-tags">
+              <span class="obj-tag">Вентиляция</span>
+              <span class="obj-tag">Кондиционирование</span>
+              <span class="obj-tag">Дымоудаление</span>
+            </div>
+          </div>
+        </div>
+        <div class="object-slide clickable">
+          <div class="obj-img">[Фото ТК]</div>
+          <div class="obj-info">
+            <h4>ТК «Галерея»</h4>
+            <div class="obj-meta">Казань, 2024 · 45 000 м²</div>
+            <div class="obj-tags">
+              <span class="obj-tag">Вентиляция</span>
+              <span class="obj-tag">Автоматика</span>
+            </div>
+          </div>
+        </div>
+        <div class="object-slide clickable">
+          <div class="obj-img">[Фото ЖК]</div>
+          <div class="obj-info">
+            <h4>ЖК «Риверсайд»</h4>
+            <div class="obj-meta">Москва, 2023 · 3 корпуса</div>
+            <div class="obj-tags">
+              <span class="obj-tag">Вентиляция</span>
+              <span class="obj-tag">Кондиционирование</span>
+              <span class="obj-tag">Приточка квартир</span>
+            </div>
+          </div>
+        </div>
+        <div class="object-slide clickable">
+          <div class="obj-img">[Фото ЖК]</div>
+          <div class="obj-info">
+            <h4>ЖК «Солнечный»</h4>
+            <div class="obj-meta">Екатеринбург, 2024 · 2 корпуса</div>
+            <div class="obj-tags">
+              <span class="obj-tag">Вентиляция</span>
+              <span class="obj-tag">Отопление</span>
+            </div>
+          </div>
+        </div>
+        <div class="object-slide clickable">
+          <div class="obj-img">[Фото склад]</div>
+          <div class="obj-info">
+            <h4>Логистический центр</h4>
+            <div class="obj-meta">Новосибирск, 2023 · 12 000 м²</div>
+            <div class="obj-tags">
+              <span class="obj-tag">Вентиляция</span>
+              <span class="obj-tag">Дымоудаление</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-arrows">
+        <div class="carousel-arrow" onclick="moveObjects(-1)">‹</div>
+        <div class="carousel-arrow" onclick="moveObjects(1)">›</div>
+      </div>
+    </div>
+    <div class="carousel-nav" id="objectsDots">
+      <div class="carousel-dot active" onclick="goToObjects(0)"></div>
+      <div class="carousel-dot" onclick="goToObjects(1)"></div>
+      <div class="carousel-dot" onclick="goToObjects(2)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- СТАТЬИ -->
+<section class="articles-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Экспертиза по вентиляции</h2>
+        <p>Материалы для инженеров, застройщиков и технических директоров</p>
+      </div>
+      <a href="#" class="section-link clickable">Все статьи →</a>
+    </div>
+    <div class="articles-grid">
+      <div class="article-card clickable">
+        <div class="art-img">[Фото: схема/чертёж]</div>
+        <div class="art-info">
+          <span class="art-tag">Проектирование</span>
+          <h3>Как выбрать тип вентиляции для жилого комплекса</h3>
+          <p>Сравнение приточной, вытяжной и приточно-вытяжной систем. Когда нужен рекуператор, а когда обойдётся естественная вентиляция.</p>
+          <div class="art-date">Май 2024 · 8 мин</div>
+        </div>
+      </div>
+      <div class="article-card clickable">
+        <div class="art-img">[Фото: BIM-модель]</div>
+        <div class="art-info">
+          <span class="art-tag">BIM</span>
+          <h3>BIM-моделирование вентиляции: зачем оно на этапе монтажа</h3>
+          <p>Как 3D-модель помогает избежать коллизий с электрикой и ВК, сократить сроки и точно закупить материалы.</p>
+          <div class="art-date">Апрель 2024 · 6 мин</div>
+        </div>
+      </div>
+      <div class="article-card clickable">
+        <div class="art-img">[Фото: приборы]</div>
+        <div class="art-info">
+          <span class="art-tag">Нормативы</span>
+          <h3>Новые требования к дымоудалению в 2024 году</h3>
+          <p>Что изменилось в СП 60.13330 и как это влияет на проектирование систем дымоудаления в торговых и офисных зданиях.</p>
+          <div class="art-date">Март 2024 · 5 мин</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA + КОНТАКТЫ -->
+<section class="cta-section" id="contacts">
+  <div class="cta-inner">
+    <div class="cta-content">
+      <h2>Обсудить проект вентиляции</h2>
+      <p>Рассчитаем смету, подберём оборудование, согласуем сроки. Работаем с девелоперами и генподрядчиками по всей России.</p>
+      <button class="cta-btn clickable">Отправить ТЗ или задать вопрос</button>
+    </div>
+    <div class="cta-contacts">
+      <div class="cta-contact-line">
+        <div class="icon">📞</div>
+        <div>
+          <strong>+7 (999) 000-00-00</strong>
+          <span>Отдел проектирования и смет, пн–пт 9:00–18:00</span>
+        </div>
+      </div>
+      <div class="cta-contact-line">
+        <div class="icon">✉️</div>
+        <div>
+          <strong>vent@mitorra.ru</strong>
+          <span>Технические задания и коммерческие предложения</span>
+        </div>
+      </div>
+      <div class="cta-contact-line">
+        <div class="icon">📍</div>
+        <div>
+          <strong>г. Москва, ул. Примерная, 10</strong>
+          <span>Офис, склад оборудования, производство воздуховодов</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="logo" style="color:#fff; font-size:1.2rem;">МИТОРРА.</div>
+      <p class="footer-desc">Комплексный монтаж инженерных систем.<br>Работаем с девелоперами и генподрядчиками.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Разделы</h4>
+      <a href="index.html">Главная</a>
+      <a href="#">Услуги</a>
+      <a href="#">Объекты</a>
+      <a href="#">О компании</a>
+      <a href="#">Контакты</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <p>+7 (999) 000-00-00</p>
+      <p>info@mitorra.ru</p>
+      <p>г. Москва, ул. Примерная, 10</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Dropdown
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById('servicesDropdown');
+    dropdown.classList.toggle('open');
+  }
+  function closeDropdowns() {
+    document.getElementById('servicesDropdown').classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.nav-item.dropdown')) {
+      closeDropdowns();
+    }
+  });
+
+  // Mobile menu
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('burger').classList.toggle('open');
+  }
+  function toggleMobileDropdown(btn) {
+    btn.parentElement.classList.toggle('open');
+  }
+  document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.remove('open');
+      document.getElementById('burger').classList.remove('open');
+    });
+  });
+
+  // Objects carousel
+  let objectsIndex = 0;
+  const objectsCarousel = document.getElementById('objectsCarousel');
+  const objectsDots = document.getElementById('objectsDots').children;
+  const totalObjects = 5;
+  function getVisible() {
+    return window.innerWidth <= 640 ? 1 : (window.innerWidth <= 1024 ? 2 : 3);
+  }
+  function getMaxIndex() { return totalObjects - getVisible(); }
+  function updateObjects() {
+    const slideWidth = objectsCarousel.children[0].offsetWidth + 20;
+    objectsCarousel.style.transform = `translateX(-${objectsIndex * slideWidth}px)`;
+    for (let i = 0; i < objectsDots.length; i++) {
+      objectsDots[i].classList.toggle('active', i === objectsIndex);
+    }
+  }
+  function moveObjects(dir) {
+    const max = getMaxIndex();
+    objectsIndex = Math.max(0, Math.min(max, objectsIndex + dir));
+    updateObjects();
+  }
+  function goToObjects(idx) {
+    objectsIndex = idx;
+    updateObjects();
+  }
+  setInterval(() => {
+    const max = getMaxIndex();
+    objectsIndex = (objectsIndex + 1) > max ? 0 : objectsIndex + 1;
+    updateObjects();
+  }, 5000);
+  window.addEventListener('resize', () => {
+    objectsIndex = Math.min(objectsIndex, getMaxIndex());
+    updateObjects();
+  });
+</script>
+
+</body>
+</html>
