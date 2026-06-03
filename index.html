@@ -524,6 +524,7 @@
     border: 1px solid var(--border);
     transition: all 0.3s ease;
     cursor: pointer;
+    display: block;
   }
   .article-card:hover {
     box-shadow: var(--shadow-hover);
@@ -538,6 +539,13 @@
     justify-content: center;
     color: #999;
     font-size: 0.75rem;
+    overflow: hidden;
+  }
+  .article-card .art-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .article-card .art-info { padding: 20px; }
   .article-card .art-tag {
@@ -568,6 +576,58 @@
   .article-card .art-date {
     font-size: 0.75rem;
     color: #aaa;
+  }
+  .article-card .art-source {
+    font-size: 0.7rem;
+    color: var(--gray);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .article-card .art-source::before {
+    content: "→";
+    color: var(--gray);
+  }
+
+  /* === ARTICLES ACCORDION === */
+  .articles-extra {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.55s ease, opacity 0.35s ease, margin-top 0.3s ease;
+    margin-top: 0;
+  }
+  .articles-section.expanded .articles-extra {
+    max-height: 900px;
+    opacity: 1;
+    margin-top: 20px;
+  }
+  #articlesToggle {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+    white-space: nowrap;
+    padding: 0;
+  }
+  #articlesToggle:hover { gap: 10px; }
+  #articlesToggle .arrow-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  .articles-section.expanded #articlesToggle .arrow-icon {
+    transform: rotate(90deg);
   }
 
   /* === CTA + КОНТАКТЫ === */
@@ -690,6 +750,7 @@
     .work-card { grid-template-columns: 1fr; }
     .work-card .work-img { min-height: 180px; }
     .articles-grid { grid-template-columns: 1fr; }
+    .articles-extra { grid-template-columns: 1fr; }
     .cta-inner { grid-template-columns: 1fr; gap: 32px; }
     .object-slide { min-width: calc(50% - 10px); }
     .hero-service-inner h1 { font-size: 1.9rem; }
@@ -704,6 +765,10 @@
     .header-inner { padding: 14px 20px; }
     .mobile-menu { padding: 80px 20px 40px; }
     .footer-inner { grid-template-columns: 1fr; }
+    /* Мобильная: только 1 карточка по умолчанию */
+    .articles-grid .article-card:nth-child(n+2) { display: none; }
+    .articles-section.expanded .articles-grid .article-card:nth-child(n+2),
+    .articles-section.expanded .articles-extra .article-card { display: block; }
   }
   .clickable { cursor: pointer; }
 </style>
@@ -711,7 +776,7 @@
 <body>
 
 <!-- Header -->
-<header>
+<<header>
   <div class="header-inner">
     <div class="logo">Логотип</div>
     <nav class="desktop-nav">
@@ -969,7 +1034,7 @@
   </div>
 </section>
 
-<!-- СТАТЬИ -->
+<!-- СТАТЬИ — реальные материалы с внешними источниками -->
 <section class="articles-section">
   <div class="section-inner">
     <div class="section-header">
@@ -977,36 +1042,83 @@
         <h2>Экспертиза по вентиляции</h2>
         <p>Материалы для инженеров, застройщиков и технических директоров</p>
       </div>
-      <a href="#" class="section-link clickable">Все статьи →</a>
+      <button class="section-link clickable" id="articlesToggle" type="button">
+        Все статьи <span class="arrow-icon">→</span>
+      </button>
     </div>
     <div class="articles-grid">
-      <div class="article-card clickable">
-        <div class="art-img">[Фото: схема/чертёж]</div>
-        <div class="art-info">
-          <span class="art-tag">Проектирование</span>
-          <h3>Как выбрать тип вентиляции для жилого комплекса</h3>
-          <p>Сравнение приточной, вытяжной и приточно-вытяжной систем. Когда нужен рекуператор, а когда обойдётся естественная вентиляция.</p>
-          <div class="art-date">Май 2024 · 8 мин</div>
+      <!-- Карточка 1: АВОК — Проектирование противодымной вентиляции -->
+      <a href="https://www.abok.ru/for_spec/articles.php?nid=8689" target="_blank" rel="noopener" class="article-card">
+        <div class="art-img">
+          <img src="https://www.abok.ru/images/upload/2025/07/dymoudalenie-preview.jpg" alt="Проектирование систем противодымной вентиляции" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='[Фото: дымоудаление]';">
         </div>
-      </div>
-      <div class="article-card clickable">
-        <div class="art-img">[Фото: BIM-модель]</div>
-        <div class="art-info">
-          <span class="art-tag">BIM</span>
-          <h3>BIM-моделирование вентиляции: зачем оно на этапе монтажа</h3>
-          <p>Как 3D-модель помогает избежать коллизий с электрикой и ВК, сократить сроки и точно закупить материалы.</p>
-          <div class="art-date">Апрель 2024 · 6 мин</div>
-        </div>
-      </div>
-      <div class="article-card clickable">
-        <div class="art-img">[Фото: приборы]</div>
         <div class="art-info">
           <span class="art-tag">Нормативы</span>
-          <h3>Новые требования к дымоудалению в 2024 году</h3>
-          <p>Что изменилось в СП 60.13330 и как это влияет на проектирование систем дымоудаления в торговых и офисных зданиях.</p>
-          <div class="art-date">Март 2024 · 5 мин</div>
+          <h3>Проектирование систем противодымной вентиляции: рекомендации эксперта</h3>
+          <p>Ответы Б.Б. Колчева (ВНИИПО МЧС) на вопросы по СП 7.13130: автономность систем, тамбур-шлюзы, совмещение ДУ и ПД в коридорах жилых зданий.</p>
+          <div class="art-date">Июль 2025 · АВОК</div>
+          <div class="art-source">abok.ru</div>
         </div>
-      </div>
+      </a>
+
+      <!-- Карточка 2: BIM Portal — nanoCAD BIM Вентиляция -->
+      <a href="https://bim-portal.ru/stati/spisok-rossiyskogo-i-zarubezhnogo-sapr/" target="_blank" rel="noopener" class="article-card">
+        <div class="art-img">
+          <img src="https://bim-portal.ru/wp-content/uploads/2024/04/nanocad-bim-ventilaciya.jpg" alt="nanoCAD BIM Вентиляция" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='[Фото: BIM Вентиляция]';">
+        </div>
+        <div class="art-info">
+          <span class="art-tag">BIM</span>
+          <h3>Список российского САПР для проектирования ОВК: nanoCAD BIM Вентиляция</h3>
+          <p>Полный перечень отечественного ПО для вентиляции и кондиционирования. Реестр Минцифры, функциональность, сравнение с зарубежными аналогами.</p>
+          <div class="art-date">Апрель 2024 · BIM Portal</div>
+          <div class="art-source">bim-portal.ru</div>
+        </div>
+      </a>
+
+      <!-- Карточка 3: TAdviser — Цифровизация строительства -->
+      <a href="https://www.tadviser.ru/index.php/Строительство" target="_blank" rel="noopener" class="article-card">
+        <div class="art-img">
+          <img src="https://www.tadviser.ru/images/upload/2024/10/cifrovizaciya-stroitelstva.jpg" alt="Цифровизация строительства" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='[Фото: цифровизация]';">
+        </div>
+        <div class="art-info">
+          <span class="art-tag">Технологии</span>
+          <h3>Цифровизация строительства: обзор рынка BIM и ТИМ в России</h3>
+          <p>Обязательный переход на ТИМ с 1 июля 2024. Барьеры внедрения: дефицит кадров, стоимость, нехватка нормативной базы. Прогнозы на 2025–2026.</p>
+          <div class="art-date">Декабрь 2025 · TAdviser</div>
+          <div class="art-source">tadviser.ru</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Дополнительные статьи (аккордеон) -->
+    <div class="articles-extra" id="articlesExtra">
+      <!-- Карточка 4: BIM Portal — Кто такой BIM-инженер -->
+      <a href="https://bim-portal.ru/stati/kto-takoy-bim-inzhener/" target="_blank" rel="noopener" class="article-card">
+        <div class="art-img">
+          <img src="https://bim-portal.ru/wp-content/uploads/2026/04/bim-inzhener.jpg" alt="BIM-инженер" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='[Фото: BIM-инженер]';">
+        </div>
+        <div class="art-info">
+          <span class="art-tag">Профессия</span>
+          <h3>Кто такой BIM-инженер: обязанности, зарплата, навыки</h3>
+          <p>Создание чертежей для производства и монтажа, координация с подрядчиками, проверка соответствия стандартам, подготовка спецификаций материалов.</p>
+          <div class="art-date">Апрель 2026 · BIM Portal</div>
+          <div class="art-source">bim-portal.ru</div>
+        </div>
+      </a>
+
+      <!-- Карточка 5: TAdviser — Цифровой контроль строительства -->
+      <a href="https://www.tadviser.ru/index.php/Новости:Цифровой_контроль_строительства:_как_технологии_меняют_работу_инженеров_технического_надзора" target="_blank" rel="noopener" class="article-card">
+        <div class="art-img">
+          <img src="https://www.tadviser.ru/images/upload/2025/03/cifrovoy-kontrol.jpg" alt="Цифровой контроль строительства" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='[Фото: контроль стройки]';">
+        </div>
+        <div class="art-info">
+          <span class="art-tag">ПНР</span>
+          <h3>Цифровой контроль строительства: дроны, IoT и BIM для инженеров технадзора</h3>
+          <p>Интервью с Тимуром Вейсом: как дроны с 3D-сканерами, датчики нагрузки и AR-очки меняют технический надзор на объектах повышенной ответственности.</p>
+          <div class="art-date">Март 2025 · TAdviser</div>
+          <div class="art-source">tadviser.ru</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1046,7 +1158,7 @@
 </section>
 
 <!-- Footer -->
-<footer>
+<<footer>
   <div class="footer-inner">
     <div class="footer-col">
       <div class="logo" style="color:#fff; font-size:1.2rem;">МИТОРРА.</div>
@@ -1133,6 +1245,11 @@
   window.addEventListener('resize', () => {
     objectsIndex = Math.min(objectsIndex, getMaxIndex());
     updateObjects();
+  });
+
+  // Articles accordion
+  document.getElementById('articlesToggle').addEventListener('click', function() {
+    document.querySelector('.articles-section').classList.toggle('expanded');
   });
 </script>
 
